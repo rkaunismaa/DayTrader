@@ -38,6 +38,7 @@ The notebooks form a progressive learning series, each building on concepts from
 | `04_Chronos_Forecasting.ipynb` | Amazon Chronos zero-shot time series forecasting, multi-horizon, stock scanner, combined technical+forecast signals | Chronos model inference |
 | `05_LLM_Analysis.ipynb` | Local LLM financial analysis (Phi-3, Mistral-7B 4-bit), earnings calls, SEC filings, structured JSON output, morning briefs | LLM inference (fp16 + 4-bit quantized) |
 | `06_Backtesting_Engine.ipynb` | Multi-signal composite scoring, regime detection, portfolio backtester, Monte Carlo simulation, walk-forward validation, parameter sensitivity | Minimal (data processing) |
+| `07_Paper_Trading.ipynb` | Paper trading system: simulation replayer, signal hub, regime-aware OMS, pre-market scanner, Alpaca API integration, QuantStats tearsheets, statistical validation, Plotly dashboards, SQLite persistence | Minimal (optional Chronos/FinBERT GPU) |
 
 ## Key Patterns
 
@@ -49,6 +50,7 @@ The notebooks form a progressive learning series, each building on concepts from
 - **Sentiment normalization**: FinBERT/Twitter-RoBERTa/DistilRoBERTa all output different label names but map to positive/negative/neutral. The `normalize_sentiment()` function in notebook 02 standardizes to a -1 to +1 scale.
 - **LLM loading** (notebook 05): Use `AutoModelForCausalLM` with `torch_dtype=torch.float16` for smaller models (Phi-3). Use `BitsAndBytesConfig(load_in_4bit=True)` for 7B+ models (Mistral). Always `trust_remote_code=True` for Phi-3.
 - **Composite signals** (notebook 06): All signals normalized to -1 (bearish) to +1 (bullish). `RegimeDetector` uses ADX (>25 trending, <20 ranging) for adaptive weighting. `PortfolioBacktester` trades multiple stocks with position limits and risk management.
+- **Paper trading** (notebook 07): `SimulationReplayer` replays yfinance data bar-by-bar. `SignalHub` aggregates 10 signals per bar. `PaperTradingEngine` manages positions with ATR stops/targets. `CONFIG.simulation_mode = True` by default; set `False` with Alpaca env vars for live paper trading. `DBManager` persists trades to SQLite (`paper_trades.db`).
 
 ## Hardware
 
