@@ -18,7 +18,7 @@ The `venv/` contains all dependencies. The Jupyter kernel is registered as `dayt
 ```bash
 python3 -m venv venv && source venv/bin/activate
 pip install jupyter ipykernel pandas numpy matplotlib seaborn plotly yfinance scikit-learn mplfinance ta
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
 pip install transformers datasets accelerate sentencepiece chronos-forecasting
 pip install feedparser wordcloud quantstats bitsandbytes
 python -m ipykernel install --user --name daytrader --display-name "DayTrader (Python 3.10)"
