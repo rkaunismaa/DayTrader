@@ -44,7 +44,7 @@ The notebooks form a progressive learning series, each building on concepts from
 
 - **yfinance data handling**: DataFrames may have MultiIndex columns. Always flatten with `df.columns = df.columns.get_level_values(0)` before use.
 - **HuggingFace models**: Use `device=0` for GPU or `device_map="cuda"` for Chronos. Models download on first run and cache in `~/.cache/huggingface/`.
-- **Chronos**: Use `ChronosBoltPipeline` (from `chronos` package) for speed, `ChronosPipeline` for accuracy. Bolt models are preferred for real-time use.
+- **Chronos**: Use `ChronosBoltPipeline` (from `chronos` package) for speed, `ChronosPipeline` for accuracy. Bolt models are preferred for real-time use. Use `dtype=` (not `torch_dtype=`) in `from_pretrained()`. The `predict()` API takes the context tensor as a positional arg (not `context=` keyword). Bolt models return quantiles `[batch, num_quantiles, horizon]` (no `num_samples` param); T5 models return samples `[batch, num_samples, horizon]`. Notebook 04 defines a `chronos_predict()` wrapper that unifies both interfaces.
 - **Technical indicators**: Use the `ta` library (e.g., `from ta.trend import EMAIndicator`), NOT `pandas-ta`.
 - **BacktestEngine** (notebook 03): Enters on next bar's open to avoid look-ahead bias. Strategies are functions with signature `strategy_fn(df, i, position) -> signal_dict | None`.
 - **Sentiment normalization**: FinBERT/Twitter-RoBERTa/DistilRoBERTa all output different label names but map to positive/negative/neutral. The `normalize_sentiment()` function in notebook 02 standardizes to a -1 to +1 scale.
